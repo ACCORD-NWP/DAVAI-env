@@ -66,7 +66,7 @@ This will create a local catalogue file under `~/.vortexrc/hack/uget/${USER}/env
 Constant files go into the `~/.vortexrc/hack/` directory. To add/modify a namelist file, first find out which namelists are used by your test in the local catalogue file you copied before (`cy49.davai_specials.02@${USER}`). In the case of the ALARO forecast, the namelists that are used are `49.arpifs@davai.02.nam.tgz@davai`, so a local copy is taken of these with
 
 ```
-uget.py hack data 49.arpifs@davai.02.nam.tgz@davai into 49.arpifs@davai.02.nam.tgz@cv9
+uget.py hack data 49.arpifs@davai.02.nam.tgz@davai into 49.arpifs@davai.02.nam.tgz@${USER}
 ```
 
 This creates a tgz file under `~/.vortexrc/hack/uget/${USER}/data/`, which then needs to be unpacked. Make sure to modify the catalogue file to use your local copy of the namelists.
@@ -83,10 +83,10 @@ TSTEP=__TIMESTEP__,
 ```
 since these are substituted by DAVAÏ.
 
-The name of the PGD file needs to be set in the catalogue `cy49.davai_specials.02@cv9` by adding the line
+The name of the PGD file needs to be set in the catalogue `cy49.davai_specials.02@${USER}` by adding the line
 
 ```
-PGD_FA_CHMH2325=uget:pgd.chmh2325-02km33.fa.01@cv9
+PGD_FA_CHMH2325=uget:pgd.chmh2325-02km33.fa.01@${USER}
 ```
 
 The PGD file itself should be put just under `~/.vortexrc/hack/uget/${USER}/data/`.
