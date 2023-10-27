@@ -22,30 +22,38 @@ Note: directories in this document are usually relative to the experiment's base
 ##### Modifications to the file `conf/davai_nrv.ini`:
 
 * add a section for the model:
-```[alaro]
+```
+[alaro]
 model               = alaro
 LAM                 = True
 input_shelf         = &{input_shelf_lam}
 fcst_term           = 12
 expertise_term      = 12
-coupling_frequency  = 3```
+coupling_frequency  = 3
+```
 
 * add a section for the forecast itself:
-```[forecast-alaro1_sfx-chmh2325]
+```
+[forecast-alaro1_sfx-chmh2325]
 alaro_version       = 1_sfx
-rundate             = date(2021022000)```
+rundate             = date(2021022000)
+```
 
 * since we're using a new domain (chmh2325), add a section for this domain:
-```[chmh2325]
+```
+[chmh2325]
 geometry            = geometry(chmh2325)
-timestep            = 90```
+timestep            = 90
+```
 
 ##### Modifications to the file `tasks/forecasts/standalone_forecasts.py`:
 
 The easiest is to copy and modify an existing forecast. In this case, we added to the following to the `alaro` family:
-```                    Family(tag='chmh2325', ticket=t, nodes=[
+```
+                    Family(tag='chmh2325', ticket=t, nodes=[
                           StandaloneAlaroForecast(tag='forecast-alaro1_sfx-chmh2325', ticket=t, **kw),
-                       ], **kw),```
+                    , **kw),
+```
 					   
 ##### Modifications to the file `tasks/forecasts/standalone/alaro.py`:
 
