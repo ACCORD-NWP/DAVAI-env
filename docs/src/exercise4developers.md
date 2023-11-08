@@ -11,7 +11,7 @@ cp ~rm9/.vortexrc/uget-client-defaults.ini .vortexrc/
 
 Next, initialize the hack directory for your user:
 
-```
+```bash
 uget.py bootstrap_hack ${USER}
 ```
 
