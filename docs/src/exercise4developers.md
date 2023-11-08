@@ -22,15 +22,15 @@ Note: directories in this document are usually relative to the experiment's base
 ##### Modifications to the file `conf/davai_nrv.ini`:
 
 * add a section for the model:
-```
-[alaro]
-model               = alaro
-LAM                 = True
-input_shelf         = &{input_shelf_lam}
-fcst_term           = 12
-expertise_term      = 12
-coupling_frequency  = 3
-```
+  ```ini
+  [alaro]
+  model               = alaro
+  LAM                 = True
+  input_shelf         = &{input_shelf_lam}
+  fcst_term           = 12
+  expertise_term      = 12
+  coupling_frequency  = 3
+  ```
 
 * add a section for the forecast itself:
 ```
