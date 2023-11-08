@@ -4,7 +4,7 @@ This section describes what was done to add an ALARO+SURFEX test to DAVAÏ. It m
 
 First, create a new DAVAÏ experiment with `davai-new_xp`. Also, run following commands to set the environment:
 
-```
+```bash
 source ~acrd/.vortexrc/profile
 cp ~rm9/.vortexrc/uget-client-defaults.ini .vortexrc/
 ```
