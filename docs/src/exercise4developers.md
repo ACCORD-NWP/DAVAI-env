@@ -49,7 +49,7 @@ rundate             = date(2021022000)
 ##### Modifications to the file `tasks/forecasts/standalone_forecasts.py`:
 
 The easiest is to copy and modify an existing forecast. In this case, we added to the following to the `alaro` family:
-```
+```python
                     Family(tag='chmh2325', ticket=t, nodes=[
                           StandaloneAlaroForecast(tag='forecast-alaro1_sfx-chmh2325', ticket=t, **kw),
                     , **kw),
