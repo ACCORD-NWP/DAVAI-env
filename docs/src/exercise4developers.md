@@ -33,11 +33,11 @@ Note: directories in this document are usually relative to the experiment's base
   ```
 
 * add a section for the forecast itself:
-```
-[forecast-alaro1_sfx-chmh2325]
-alaro_version       = 1_sfx
-rundate             = date(2021022000)
-```
+  ```ini
+  [forecast-alaro1_sfx-chmh2325]
+  alaro_version       = 1_sfx
+  rundate             = date(2021022000)
+  ```
 
 * since we're using a new domain (chmh2325), add a section for this domain:
   ```ini
