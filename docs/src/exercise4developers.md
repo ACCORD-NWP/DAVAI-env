@@ -40,11 +40,11 @@ rundate             = date(2021022000)
 ```
 
 * since we're using a new domain (chmh2325), add a section for this domain:
-```
-[chmh2325]
-geometry            = geometry(chmh2325)
-timestep            = 90
-```
+  ```ini
+  [chmh2325]
+  geometry            = geometry(chmh2325)
+  timestep            = 90
+  ```
 
 ##### Modifications to the file `tasks/forecasts/standalone_forecasts.py`:
 
