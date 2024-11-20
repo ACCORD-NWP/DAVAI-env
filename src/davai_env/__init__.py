@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding:Utf-8 -*-
 """
 Davai environment around experiments and shelves.
 """
 from __future__ import print_function, absolute_import, unicode_literals, division
 
+import importlib.resources
 import sys
 import os
 import re
@@ -14,7 +13,7 @@ import io
 import subprocess
 
 _package_rootdir = os.path.dirname(os.path.dirname(os.path.realpath(__path__[0])))  # realpath to resolve symlinks
-__version__ = io.open(os.path.join(_package_rootdir, 'VERSION'), 'r').read().strip()
+__version__ = "1.1.10"
 __this_repo__ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 # fixed parameters
@@ -24,9 +23,7 @@ DAVAI_XPID_SYNTAX = 'dv-{xpid_num:04}-{host}@{user}'
 DAVAI_XPID_RE = re.compile('^' + DAVAI_XPID_SYNTAX.replace('{xpid_num:04}', '\d+').
                                                    replace('-{host}', '(-\w+)?').
                                                    replace('{user}', '\w+') + '$')
-CONFIG_BASE_FILE = os.path.join(__this_repo__, 'conf', 'base.ini')
 CONFIG_USER_FILE = os.path.join(DAVAI_RC_DIR, 'user_config.ini')
-CONFIG_TEMPLATE_USER_FILE = os.path.join(__this_repo__, 'templates', 'user_config.ini')
 
 
 def guess_host():
@@ -43,23 +40,27 @@ def guess_host():
                 host = h[:-len('_re_pattern')]  # h is '{host}_re_pattern'
                 break
     if not host:
-        raise ValueError(("Couldn't find 'host' in [hosts] section of config files ('{}', '{}'), " +
+        raise ValueError(("Couldn't find 'host' in [hosts] section of config files ('{}', base config), " +
                           "nor guess from hostname ({}) and keys '*host*_re_pattern' " +
                           "in section 'hosts' of same config files.").format(
-            CONFIG_USER_FILE, CONFIG_BASE_FILE, socket_hostname))
+            CONFIG_USER_FILE, socket_hostname))
     return host
 
 
 # CONFIG
 config = configparser.ConfigParser()
-config.read(CONFIG_BASE_FILE)
+with importlib.resources.open_text(
+        "davai.conf", "base.ini",
+) as fh:
+    config.read_file(fh)
 # read user config a first time to help guessing host
 if os.path.exists(CONFIG_USER_FILE):
     config.read(CONFIG_USER_FILE)
 # then complete config with host config file
-CONFIG_HOST_FILE = os.path.join(__this_repo__, 'conf', '{}.ini'.format(guess_host()))
-if os.path.exists(CONFIG_HOST_FILE):
-    config.read(CONFIG_HOST_FILE)
+with importlib.resources.open_text(
+    "davai.conf", f"{guess_host()}.ini",
+) as fh:
+    config.read_file(fh)
 # and read again user config so that it overwrites host config
 if os.path.exists(CONFIG_USER_FILE):
     config.read(CONFIG_USER_FILE)
@@ -67,7 +68,7 @@ if os.path.exists(CONFIG_USER_FILE):
 def show_config():
     """Show current config."""
     print("Configuration, from:")
-    for c in (CONFIG_BASE_FILE, CONFIG_HOST_FILE, CONFIG_USER_FILE):
+    for c in ("BASE_CONFIG", "HOST_CONFIG", CONFIG_USER_FILE):
         print(" - {}".format(c))
     print("-" * 80)
     config.write(sys.stdout)
@@ -77,7 +78,9 @@ def preset_user_config_file(prompt=None):
     if not os.path.exists(CONFIG_USER_FILE):
         if not os.path.exists(os.path.basename(CONFIG_USER_FILE)):
             os.makedirs(os.path.basename(CONFIG_USER_FILE))
-        with io.open(CONFIG_TEMPLATE_USER_FILE, 'r') as i:
+        with importlib.resources.open_text(
+            "davai.conf", "user_config_template.ini",
+        ) as i:
             t = i.readlines()
         with io.open(CONFIG_USER_FILE, 'w') as o:
             for l in t:

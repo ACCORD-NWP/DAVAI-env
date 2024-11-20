@@ -1,0 +1,23 @@
+[project]
+name = "davai"
+version = "1.1.10"
+description = ""
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = []
+license = {text = "CECILL-C"}
+authors = []
+dependencies = []
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-dir]
+davai = "src/davai_env"
+
+[project.scripts]
+davai-new_xp = "davai.cli.new_xp"
+
+[tool.setuptools.package-data]
+"davai" = ["conf/*.ini"]
