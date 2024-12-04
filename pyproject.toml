@@ -17,7 +17,7 @@ build-backend = "setuptools.build_meta"
 davai = "src/davai_env"
 
 [project.scripts]
-davai-new_xp = "davai.cli.new_xp"
+davai-new_xp = "davai.cli.new_xp:new_xp"
 
 [tool.setuptools.package-data]
 "davai" = ["conf/*.ini"]
